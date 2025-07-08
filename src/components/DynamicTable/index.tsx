@@ -12,12 +12,12 @@ import { EmployeeData } from "../../interfaces/employes.interface";
 
 export interface Column {
     label: string;
-    key: string;
-    render?: (value: unknown, row: Record<string, unknown>) => React.ReactNode;
+    key: keyof EmployeeData;
+    render?: (value: unknown, row: EmployeeData) => React.ReactNode;
 }
 
 interface DynamicTableProps {
-    columns: unknown;
+    columns: Column[];
     rows: EmployeeData[];
 }
 
@@ -27,8 +27,8 @@ export default function DynamicTable({ columns, rows }: DynamicTableProps) {
             <Table>
                 <TableHead sx={{ backgroundColor: "#d0d7e1" }}>
                     <TableRow>
-                        {columns.map((col) => (
-                            <TableCell key={col.key}>
+                        {columns.map((col: Column) => (
+                            <TableCell key={col.key as string}>
                                 <Typography variant="subtitle2" fontWeight="bold">
                                     {col.label.toUpperCase()}
                                 </Typography>
@@ -39,9 +39,11 @@ export default function DynamicTable({ columns, rows }: DynamicTableProps) {
                 <TableBody>
                     {rows.map((row, idx) => (
                         <TableRow key={idx}>
-                            {columns.map((col) => (
-                                <TableCell key={col.key}>
-                                    {col.render ? col.render(row[col.key], row) : String(row[col.key])}
+                            {columns.map((col: Column) => (
+                                <TableCell key={col.key as string}>
+                                    {col.render
+                                        ? col.render(row[col.key], row)
+                                        : String(row[col.key])}
                                 </TableCell>
                             ))}
                         </TableRow>
