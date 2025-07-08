@@ -25,8 +25,8 @@ export default function Employes() {
     const columnsDinamic = [
         ...columns,
         {
-            label: "Acciones",
-            key: "actions",
+            label: "Editar",
+            key: "editar",
             render: (_: unknown, row: EmployeeData) => (
                 <Button
                     variant="contained"
@@ -40,8 +40,8 @@ export default function Employes() {
             ),
         },
         {
-            label: "Acciones",
-            key: "actions",
+            label: "Eliminar",
+            key: "eliminar",
             render: (_: unknown, row: EmployeeData) => (
                 <Button
                     variant="contained"
